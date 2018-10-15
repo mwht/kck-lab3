@@ -55,7 +55,7 @@ public class Controller {
 
     @FXML
     private void onFrequencyKnobMouseMove(MouseEvent mouseEvent) {
-        double vX = (mouseEvent.getX() - deltaX) / 100.0;
+        double vX = (mouseEvent.getX() - deltaX) / 1000.0;
         double progress = frequencyKnob.getProgress() + vX;
         if (progress > 0.9999) progress = 0.9999;
         if (progress < 0.001) progress = 0.001;
