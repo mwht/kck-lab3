@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Cylinder?>
+<?import javafx.scene.shape.Line?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+   <children>
+      <ToggleButton layoutX="180.0" layoutY="261.0" mnemonicParsing="false" text="~ " />
+      <Slider layoutX="233.0" layoutY="266.0" />
+      <Slider layoutX="391.0" layoutY="266.0" value="50.0" />
+      <RadioButton alignment="BOTTOM_CENTER" contentDisplay="BOTTOM" layoutX="543.0" layoutY="265.0" mnemonicParsing="false" selected="true">
+         <toggleGroup>
+            <ToggleGroup fx:id="freq" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton layoutX="564.0" layoutY="265.0" mnemonicParsing="false" toggleGroup="$freq" />
+      <RadioButton layoutX="585.0" layoutY="265.0" mnemonicParsing="false" toggleGroup="$freq" />
+      <RadioButton layoutX="606.0" layoutY="265.0" mnemonicParsing="false" toggleGroup="$freq" />
+      <Label alignment="CENTER" layoutX="540.0" layoutY="244.0" prefHeight="18.0" prefWidth="36.0" text="U" />
+      <Label alignment="CENTER" layoutX="561.0" layoutY="244.0" prefHeight="18.0" prefWidth="30.0" text="D" />
+      <Label alignment="CENTER" layoutX="582.0" layoutY="244.0" prefHeight="18.0" prefWidth="30.0" text="S" />
+      <Label alignment="CENTER" layoutX="603.0" layoutY="244.0" prefHeight="18.0" prefWidth="30.0" text="K" />
+      <ProgressIndicator fx:id="frequencyKnob" layoutX="642.0" layoutY="90.0" onMouseDragged="#onFrequencyKnobMouseMove" onMousePressed="#onFrequencyKnobMouseDown" onMouseReleased="#onFrequencyKnobMouseUp" prefHeight="120.0" prefWidth="100.0" progress="0.5">
+         <cursor>
+            <Cursor fx:constant="MOVE" />
+         </cursor>
+         <effect>
+            <Glow />
+         </effect>
+      </ProgressIndicator>
+      <Cylinder fx:id="tuningU" height="466.0" layoutX="391.0" layoutY="61.0" radius="10.0" rotate="90.0" />
+      <Cylinder fx:id="tuningD" height="466.0" layoutX="391.0" layoutY="100.0" radius="10.0" rotate="90.0" />
+      <Cylinder fx:id="tuningS" height="466.0" layoutX="391.0" layoutY="140.0" radius="10.0" rotate="90.0" />
+      <Cylinder fx:id="tuningK" height="466.0" layoutX="391.0" layoutY="179.0" radius="10.0" rotate="90.0" />
+      <Line fx:id="tuningLine" endX="30.0" layoutX="656.0" layoutY="121.0" rotate="90.0" startX="-100.0" stroke="RED" strokeLineJoin="ROUND" strokeWidth="10.0" />
+   </children>
+</AnchorPane>
