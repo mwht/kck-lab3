@@ -5,8 +5,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.PhongMaterial;
+import javafx.scene.shape.Cylinder;
 import javafx.scene.shape.Line;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 public class Controller {
@@ -16,8 +21,37 @@ public class Controller {
     private Line tuningLine;
     @FXML
     private ToggleButton powerButton;
+
+    /* TODO: list? */
+    @FXML
+    private Cylinder tuningU;
+    @FXML
+    private Cylinder tuningD;
+    @FXML
+    private Cylinder tuningS;
+    @FXML
+    private Cylinder tuningK;
+
+    private static List<Cylinder> tuningGuides;
+
+
     private static boolean frequencyKnobMoving = false;
     private double deltaX = 0;
+    private static PhongMaterial offMaterial = new PhongMaterial();
+    private static PhongMaterial onMaterial = new PhongMaterial();
+
+    static {
+        offMaterial.setDiffuseColor(Color.WHITE);
+        onMaterial.setDiffuseColor(Color.WHEAT);
+    }
+
+    {
+        tuningGuides = new ArrayList<>();
+        tuningGuides.add(tuningU);
+        tuningGuides.add(tuningD);
+        tuningGuides.add(tuningS);
+        tuningGuides.add(tuningK);
+    }
 
     @FXML
     private void onFrequencyKnobMouseMove(MouseEvent mouseEvent) {
@@ -50,8 +84,17 @@ public class Controller {
     private void onPowerButtonToggle(ActionEvent actionEvent) {
         if(powerButton.isSelected()) {
             Logger.getAnonymousLogger().info("powered on");
+            tuningU.setMaterial(onMaterial);
+            tuningD.setMaterial(onMaterial);
+            tuningS.setMaterial(onMaterial);
+            tuningK.setMaterial(onMaterial);
         } else {
             Logger.getAnonymousLogger().info("unitra off");
+            tuningU.setMaterial(offMaterial);
+            tuningD.setMaterial(offMaterial);
+            tuningS.setMaterial(offMaterial);
+            tuningK.setMaterial(offMaterial);
+
         }
     }
 }
