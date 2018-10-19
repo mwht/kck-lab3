@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.Slider;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
@@ -20,6 +21,8 @@ public class Main extends Application {
     private static MediaPlayer mediaPlayer;
     private static List<Media> mediaList;
     private static int currentBand;
+    private static double accuracy;
+    private static double volume;
 
     public static void setMute(boolean muted) {
         if(mediaPlayer != null) {
@@ -34,6 +37,16 @@ public class Main extends Application {
         mediaPlayer = new MediaPlayer(mediaList.get(band));
         mediaPlayer.setVolume(0);
         mediaPlayer.play();
+    }
+
+    private static void setAccuracy(double mAccuracy) {
+        accuracy = mAccuracy;
+        mediaPlayer.setVolume(accuracy*volume);
+    }
+
+    public static void setVolume(double mVolume) {
+        volume = mVolume;
+        mediaPlayer.setVolume(accuracy*volume);
     }
 
     @Override
@@ -51,6 +64,7 @@ public class Main extends Application {
         primaryStage.show();
 
         setCurrentBand(0);
+        setMute(true);
 
         ProgressIndicator frequencyKnob = (ProgressIndicator) rootScene.lookup("#frequencyKnob");
         frequencyKnob.progressProperty().addListener(new ChangeListener<Number>() {
@@ -62,7 +76,30 @@ public class Main extends Application {
                 Logger.getAnonymousLogger().info((double)newValue+" - "+CORRECT_FREQ_TABLE[currentBand]+"="+Math.abs((double)newValue - CORRECT_FREQ_TABLE[currentBand]));
 
                 if(Math.abs((double)newValue - CORRECT_FREQ_TABLE[currentBand]) < MAX_FREQ_ERROR) {
-                    mediaPlayer.setVolume(1-(Math.abs((double)newValue - CORRECT_FREQ_TABLE[currentBand])/MAX_FREQ_ERROR));
+                    setAccuracy(1-(Math.abs((double)newValue - CORRECT_FREQ_TABLE[currentBand])/MAX_FREQ_ERROR));
+                }
+            }
+        });
+
+        Slider volumeCtrl = (Slider) rootScene.lookup("#volumeCtrl");
+        volumeCtrl.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                setVolume((double)newValue / 100.0);
+            }
+        });
+
+        Slider equalizerCtrl = (Slider) rootScene.lookup("#equalizerCtrl");
+        equalizerCtrl.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                double regulator = (double) newValue;
+                if(regulator >= 50.0) {
+                    mediaPlayer.getAudioEqualizer().getBands().get(3).setGain(0);
+                    mediaPlayer.getAudioEqualizer().getBands().get(7).setGain((regulator-50.0)/(50.0/12.0));
+                } else {
+                    mediaPlayer.getAudioEqualizer().getBands().get(3).setGain((50.0-regulator)/(50.0/12.0));
+                    mediaPlayer.getAudioEqualizer().getBands().get(7).setGain(0);
                 }
             }
         });
