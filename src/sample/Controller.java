@@ -62,21 +62,21 @@ public class Controller {
         frequencyKnob.setProgress(progress);
         // warning code below hurts really bad !
         tuningLine.setLayoutX(198+(progress*(656-198)));
-        Logger.getAnonymousLogger().info("mouse moved! ("+(frequencyKnob.getProgress() + vX)+")");
+        //Logger.getAnonymousLogger().info("mouse moved! ("+(frequencyKnob.getProgress() + vX)+")");
         deltaX = mouseEvent.getX();
     }
 
     @FXML
     private void onFrequencyKnobMouseDown(MouseEvent mouseEvent) {
         frequencyKnobMoving = true;
-        Logger.getAnonymousLogger().info("mouse pressed!");
+        //Logger.getAnonymousLogger().info("mouse pressed!");
         deltaX = mouseEvent.getX();
     }
 
     @FXML
     private void onFrequencyKnobMouseUp(MouseEvent mouseEvent) {
         frequencyKnobMoving = false;
-        Logger.getAnonymousLogger().info("mouse released!");
+        //Logger.getAnonymousLogger().info("mouse released!");
 
     }
 
@@ -101,7 +101,8 @@ public class Controller {
     }
 
     private void changeBand(int band) {
-        Logger.getAnonymousLogger().info("Band set to " + band);
+        Main.setCurrentBand(band);
+        //Logger.getAnonymousLogger().info("Band set to " + band);
     }
 
     @FXML
@@ -112,13 +113,14 @@ public class Controller {
             tuningD.setMaterial(onMaterial);
             tuningS.setMaterial(onMaterial);
             tuningK.setMaterial(onMaterial);
+            Main.setMute(false);
         } else {
             Logger.getAnonymousLogger().info("unitra off");
             tuningU.setMaterial(offMaterial);
             tuningD.setMaterial(offMaterial);
             tuningS.setMaterial(offMaterial);
             tuningK.setMaterial(offMaterial);
-
+            Main.setMute(true);
         }
     }
 }
