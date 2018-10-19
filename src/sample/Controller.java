@@ -81,6 +81,30 @@ public class Controller {
     }
 
     @FXML
+    private void onBandSelectorUAction(ActionEvent actionEvent) {
+        changeBand(0);
+    }
+
+    @FXML
+    private void onBandSelectorDAction(ActionEvent actionEvent) {
+        changeBand(1);
+    }
+
+    @FXML
+    private void onBandSelectorSAction(ActionEvent actionEvent) {
+        changeBand(2);
+    }
+
+    @FXML
+    private void onBandSelectorKAction(ActionEvent actionEvent) {
+        changeBand(3);
+    }
+
+    private void changeBand(int band) {
+        Logger.getAnonymousLogger().info("Band set to " + band);
+    }
+
+    @FXML
     private void onPowerButtonToggle(ActionEvent actionEvent) {
         if(powerButton.isSelected()) {
             Logger.getAnonymousLogger().info("powered on");

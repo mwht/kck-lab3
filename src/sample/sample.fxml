@@ -12,20 +12,19 @@
 <?import javafx.scene.shape.Cylinder?>
 <?import javafx.scene.shape.Line?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
       <ToggleButton fx:id="powerButton" layoutX="180.0" layoutY="261.0" mnemonicParsing="false" onAction="#onPowerButtonToggle" text="~ " />
-      <Slider layoutX="233.0" layoutY="266.0" />
-      <Slider layoutX="391.0" layoutY="266.0" value="50.0" />
-      <RadioButton alignment="BOTTOM_CENTER" contentDisplay="BOTTOM" layoutX="543.0" layoutY="265.0" mnemonicParsing="false" selected="true">
+      <Slider fx:id="volumeCtrl" layoutX="233.0" layoutY="266.0" />
+      <Slider fx:id="equalizerCtrl" layoutX="391.0" layoutY="266.0" value="50.0" />
+      <RadioButton fx:id="bandSelectorU" alignment="BOTTOM_CENTER" contentDisplay="BOTTOM" layoutX="543.0" layoutY="265.0" mnemonicParsing="false" onAction="#onBandSelectorUAction" selected="true">
          <toggleGroup>
             <ToggleGroup fx:id="freq" />
          </toggleGroup>
       </RadioButton>
-      <RadioButton layoutX="564.0" layoutY="265.0" mnemonicParsing="false" toggleGroup="$freq" />
-      <RadioButton layoutX="585.0" layoutY="265.0" mnemonicParsing="false" toggleGroup="$freq" />
-      <RadioButton layoutX="606.0" layoutY="265.0" mnemonicParsing="false" toggleGroup="$freq" />
+      <RadioButton fx:id="bandSelectorD" layoutX="564.0" layoutY="265.0" mnemonicParsing="false" onAction="#onBandSelectorDAction" toggleGroup="$freq" />
+      <RadioButton fx:id="bandSelectorS" layoutX="585.0" layoutY="265.0" mnemonicParsing="false" onAction="#onBandSelectorSAction" toggleGroup="$freq" />
+      <RadioButton fx:id="bandSelectorK" layoutX="606.0" layoutY="265.0" mnemonicParsing="false" onAction="#onBandSelectorKAction" toggleGroup="$freq" />
       <Label alignment="CENTER" layoutX="540.0" layoutY="244.0" prefHeight="18.0" prefWidth="36.0" text="U" />
       <Label alignment="CENTER" layoutX="561.0" layoutY="244.0" prefHeight="18.0" prefWidth="30.0" text="D" />
       <Label alignment="CENTER" layoutX="582.0" layoutY="244.0" prefHeight="18.0" prefWidth="30.0" text="S" />
