@@ -18,6 +18,7 @@ import java.util.logging.Logger;
 
 public class Main extends Application {
 
+    private static boolean radioMute;
     private static MediaPlayer mediaPlayer;
     private static List<Media> mediaList;
     private static int currentBand;
@@ -27,7 +28,9 @@ public class Main extends Application {
 
     public static void setMute(boolean muted) {
         if(mediaPlayer != null) {
+            radioMute = muted;
             mediaPlayer.setMute(muted);
+            if(!radioMute) mediaPlayer.setVolume(accuracy*volume);
         }
     }
 
@@ -36,6 +39,8 @@ public class Main extends Application {
     }
 
     public static void setEQShape(double percentage) {
+        // band 3 = 250Hz
+        // band 7 = 4000Hz
         eqPercentage = percentage;
         if(percentage >= 50.0) {
             mediaPlayer.getAudioEqualizer().getBands().get(3).setGain(0);
@@ -51,19 +56,19 @@ public class Main extends Application {
         if(mediaPlayer != null)
             mediaPlayer.stop();
         mediaPlayer = new MediaPlayer(mediaList.get(band));
-        mediaPlayer.setVolume(0);
+        mediaPlayer.setVolume(0); // make sure we don't play track before tuning
         mediaPlayer.play();
         setEQShape();
     }
 
     private static void setAccuracy(double mAccuracy) {
         accuracy = mAccuracy;
-        mediaPlayer.setVolume(accuracy*volume);
+        if(!radioMute) mediaPlayer.setVolume(accuracy*volume);
     }
 
     public static void setVolume(double mVolume) {
         volume = mVolume;
-        mediaPlayer.setVolume(accuracy*volume);
+        if(!radioMute) mediaPlayer.setVolume(accuracy*volume);
     }
 
     @Override
@@ -82,6 +87,7 @@ public class Main extends Application {
 
         setCurrentBand(0);
         setMute(true);
+        setVolume(0.5);
 
         ProgressIndicator frequencyKnob = (ProgressIndicator) rootScene.lookup("#frequencyKnob");
         frequencyKnob.progressProperty().addListener(new ChangeListener<Number>() {
