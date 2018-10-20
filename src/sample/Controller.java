@@ -32,6 +32,15 @@ public class Controller {
     @FXML
     private Cylinder tuningK;
 
+    @FXML
+    private Line tuneLineU;
+    @FXML
+    private Line tuneLineD;
+    @FXML
+    private Line tuneLineS;
+    @FXML
+    private Line tuneLineK;
+
     private static List<Cylinder> tuningGuides;
 
 
@@ -53,6 +62,14 @@ public class Controller {
         tuningGuides.add(tuningK);
     }
 
+    private void fixGuidelines() {
+        tuneLineU.toFront();
+        tuneLineD.toFront();
+        tuneLineS.toFront();
+        tuneLineK.toFront();
+        tuningLine.toFront();
+    }
+
     @FXML
     private void onFrequencyKnobMouseMove(MouseEvent mouseEvent) {
         double vX = (mouseEvent.getX() - deltaX) / 1000.0;
@@ -62,8 +79,10 @@ public class Controller {
         frequencyKnob.setProgress(progress);
         // warning code below hurts really bad !
         tuningLine.setLayoutX(198+(progress*(656-198)));
+        fixGuidelines();
         //Logger.getAnonymousLogger().info("mouse moved! ("+(frequencyKnob.getProgress() + vX)+")");
         deltaX = mouseEvent.getX();
+
     }
 
     @FXML
