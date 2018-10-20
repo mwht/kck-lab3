@@ -42,5 +42,9 @@
       <Cylinder fx:id="tuningS" height="466.0" layoutX="391.0" layoutY="140.0" radius="10.0" rotate="90.0" />
       <Cylinder fx:id="tuningK" height="466.0" layoutX="391.0" layoutY="179.0" radius="10.0" rotate="90.0" />
       <Line fx:id="tuningLine" endX="30.0" layoutX="656.0" layoutY="121.0" rotate="90.0" startX="-100.0" stroke="RED" strokeLineJoin="ROUND" strokeWidth="10.0" />
+      <Label layoutX="130.0" layoutY="53.0" text="U" />
+      <Label layoutX="130.0" layoutY="92.0" text="D" />
+      <Label layoutX="131.0" layoutY="132.0" text="S" />
+      <Label layoutX="131.0" layoutY="171.0" text="K" />
    </children>
 </AnchorPane>

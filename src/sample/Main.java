@@ -65,7 +65,7 @@ public class Main extends Application {
         } else {
             setAccuracy(0);
         }
-        Logger.getAnonymousLogger().info(Double.toString(mediaPlayer.getVolume()));
+        //Logger.getAnonymousLogger().info(Double.toString(mediaPlayer.getVolume()));
         mediaPlayer.play();
     }
 
@@ -103,7 +103,7 @@ public class Main extends Application {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 
-                Logger.getAnonymousLogger().info((double)newValue+" - "+CORRECT_FREQ_TABLE[currentBand]+"="+Math.abs((double)newValue - CORRECT_FREQ_TABLE[currentBand]));
+                //Logger.getAnonymousLogger().info((double)newValue+" - "+CORRECT_FREQ_TABLE[currentBand]+"="+Math.abs((double)newValue - CORRECT_FREQ_TABLE[currentBand]));
 
                 if(Math.abs((double)newValue - CORRECT_FREQ_TABLE[currentBand]) < MAX_FREQ_ERROR) {
                     setAccuracy(1-(Math.abs((double)newValue - CORRECT_FREQ_TABLE[currentBand])/MAX_FREQ_ERROR));
