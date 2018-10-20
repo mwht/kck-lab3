@@ -8,87 +8,34 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.Slider;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
+import sample.RadioStation.RadioStationBand;
 
 public class Main extends Application {
 
-    private static boolean radioMute;
-    private static MediaPlayer mediaPlayer;
-    private static List<Media> mediaList;
-    private static int currentBand;
-    private static double accuracy;
-    private static double volume;
-    private static double eqPercentage;
-    private final static double[] CORRECT_FREQ_TABLE = {0.25,0.43,0.66,0.50};
-    private final static double MAX_FREQ_ERROR = 0.10;
+    private static List<RadioStation> stations = new ArrayList<>();
+    private static RadioStationBand selectedBand = RadioStationBand.BAND_U;
 
-    public static void setMute(boolean muted) {
-        if(mediaPlayer != null) {
-            radioMute = muted;
-            mediaPlayer.setMute(muted);
-            if(!radioMute) mediaPlayer.setVolume(accuracy*volume);
-        }
+    public static void setCurrentBand(int currentBand, ProgressIndicator frequencyKnob) {
+        selectedBand = RadioStationBand.values()[currentBand];
+        stations.forEach(station -> station.tune(frequencyKnob.getProgress(), selectedBand));
     }
 
-    public static void setEQShape() {
-        setEQShape(eqPercentage);
-    }
-
-    public static void setEQShape(double percentage) {
-        // band 3 = 250Hz
-        // band 7 = 4000Hz
-        eqPercentage = percentage;
-        if(percentage >= 50.0) {
-            mediaPlayer.getAudioEqualizer().getBands().get(3).setGain(0);
-            mediaPlayer.getAudioEqualizer().getBands().get(7).setGain((percentage-50.0)/(50.0/12.0));
-        } else {
-            mediaPlayer.getAudioEqualizer().getBands().get(3).setGain((50.0-percentage)/(50.0/12.0));
-            mediaPlayer.getAudioEqualizer().getBands().get(7).setGain(0);
-        }
-    }
-
-    public static void setCurrentBand(int band, ProgressIndicator frequencyKnob) {
-        currentBand = band;
-        if(mediaPlayer != null)
-            mediaPlayer.stop();
-        mediaPlayer = new MediaPlayer(mediaList.get(band));
-        setEQShape();
-        if(Math.abs(frequencyKnob.getProgress() - CORRECT_FREQ_TABLE[currentBand]) < MAX_FREQ_ERROR) {
-            setAccuracy(1-(Math.abs(frequencyKnob.getProgress() - CORRECT_FREQ_TABLE[currentBand])/MAX_FREQ_ERROR));
-        } else {
-            setAccuracy(0);
-        }
-        //Logger.getAnonymousLogger().info(Double.toString(mediaPlayer.getVolume()));
-        mediaPlayer.play();
-    }
-
-    private static void setAccuracy(double mAccuracy) {
-        accuracy = mAccuracy;
-        if(!radioMute) mediaPlayer.setVolume(accuracy*volume);
-        else mediaPlayer.setVolume(0);
-    }
-
-    public static void setVolume(double mVolume) {
-        volume = mVolume;
-        if(!radioMute) mediaPlayer.setVolume(accuracy*volume);
-        else mediaPlayer.setVolume(0);
-
+    public static void setMute(boolean mute) {
+        stations.forEach(station -> station.setMute(mute));
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        mediaList = new ArrayList<>();
-        mediaList.add(new Media(getClass().getResource("1.mp3").toURI().toString()));
-        mediaList.add(new Media(getClass().getResource("2.mp3").toURI().toString()));
-        mediaList.add(new Media(getClass().getResource("3.mp3").toURI().toString()));
-        mediaList.add(new Media(getClass().getResource("4.mp3").toURI().toString()));
+        stations.add(new RadioStation("1.mp3", 0.25, RadioStationBand.BAND_U));
+        stations.add(new RadioStation("2.mp3", 0.43, RadioStationBand.BAND_D));
+        stations.add(new RadioStation("3.mp3", 0.66, RadioStationBand.BAND_U));
+        stations.add(new RadioStation("4.mp3", 0.12, RadioStationBand.BAND_D));
+
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         Scene rootScene = new Scene(root, 750, 300);
         primaryStage.setResizable(false);
@@ -102,14 +49,7 @@ public class Main extends Application {
         frequencyKnob.progressProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-
-                //Logger.getAnonymousLogger().info((double)newValue+" - "+CORRECT_FREQ_TABLE[currentBand]+"="+Math.abs((double)newValue - CORRECT_FREQ_TABLE[currentBand]));
-
-                if(Math.abs((double)newValue - CORRECT_FREQ_TABLE[currentBand]) < MAX_FREQ_ERROR) {
-                    setAccuracy(1-(Math.abs((double)newValue - CORRECT_FREQ_TABLE[currentBand])/MAX_FREQ_ERROR));
-                } else {
-                    setAccuracy(0);
-                }
+                stations.forEach(station -> station.tune((double) newValue, selectedBand));
             }
         });
 
@@ -117,7 +57,7 @@ public class Main extends Application {
         volumeCtrl.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                setVolume((double)newValue / 100.0);
+                stations.forEach(station -> station.setVolume((double) newValue / 100.0));
             }
         });
 
@@ -125,14 +65,9 @@ public class Main extends Application {
         equalizerCtrl.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                double regulator = (double) newValue;
-                setEQShape(regulator);
+                stations.forEach(station -> station.setEQShape((double) newValue));
             }
         });
-
-        setCurrentBand(0, frequencyKnob);
-        setMute(true);
-        setVolume(0.5);
 
         primaryStage.show();
     }

@@ -12,7 +12,7 @@
 <?import javafx.scene.shape.Cylinder?>
 <?import javafx.scene.shape.Line?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="750.0" style="-fx-background-color: #404040;" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
       <Cylinder fx:id="tuningK" height="466.0" layoutX="391.0" layoutY="179.0" radius="10.0" rotate="90.0" />
       <Cylinder fx:id="tuningS" height="466.0" layoutX="391.0" layoutY="140.0" radius="10.0" rotate="90.0" />
@@ -29,11 +29,11 @@
       <RadioButton fx:id="bandSelectorD" layoutX="564.0" layoutY="265.0" mnemonicParsing="false" onAction="#onBandSelectorDAction" toggleGroup="$freq" />
       <RadioButton fx:id="bandSelectorS" layoutX="585.0" layoutY="265.0" mnemonicParsing="false" onAction="#onBandSelectorSAction" toggleGroup="$freq" />
       <RadioButton fx:id="bandSelectorK" layoutX="606.0" layoutY="265.0" mnemonicParsing="false" onAction="#onBandSelectorKAction" toggleGroup="$freq" />
-      <Label alignment="CENTER" layoutX="540.0" layoutY="244.0" prefHeight="18.0" prefWidth="36.0" text="U" />
-      <Label alignment="CENTER" layoutX="561.0" layoutY="244.0" prefHeight="18.0" prefWidth="30.0" text="D" />
-      <Label alignment="CENTER" layoutX="582.0" layoutY="244.0" prefHeight="18.0" prefWidth="30.0" text="S" />
-      <Label alignment="CENTER" layoutX="603.0" layoutY="244.0" prefHeight="18.0" prefWidth="30.0" text="K" />
-      <ProgressIndicator fx:id="frequencyKnob" layoutX="642.0" layoutY="90.0" onMouseDragged="#onFrequencyKnobMouseMove" onMousePressed="#onFrequencyKnobMouseDown" onMouseReleased="#onFrequencyKnobMouseUp" prefHeight="120.0" prefWidth="100.0" progress="0.5">
+      <Label alignment="CENTER" layoutX="540.0" layoutY="244.0" prefHeight="18.0" prefWidth="36.0" text="U" textFill="WHITE" />
+      <Label alignment="CENTER" layoutX="561.0" layoutY="244.0" prefHeight="18.0" prefWidth="30.0" text="D" textFill="WHITE" />
+      <Label alignment="CENTER" layoutX="582.0" layoutY="244.0" prefHeight="18.0" prefWidth="30.0" text="S" textFill="WHITE" />
+      <Label alignment="CENTER" layoutX="603.0" layoutY="244.0" prefHeight="18.0" prefWidth="30.0" text="K" textFill="WHITE" />
+      <ProgressIndicator fx:id="frequencyKnob" layoutX="642.0" layoutY="90.0" onMouseDragged="#onFrequencyKnobMouseMove" onMousePressed="#onFrequencyKnobMouseDown" prefHeight="120.0" prefWidth="100.0" progress="0.5">
          <cursor>
             <Cursor fx:constant="MOVE" />
          </cursor>
@@ -41,17 +41,17 @@
             <Glow />
          </effect>
       </ProgressIndicator>
-      <Label layoutX="130.0" layoutY="53.0" text="U" />
-      <Label layoutX="130.0" layoutY="92.0" text="D" />
-      <Label layoutX="131.0" layoutY="132.0" text="S" />
-      <Label layoutX="131.0" layoutY="171.0" text="K" />
+      <Label layoutX="130.0" layoutY="53.0" text="U" textFill="WHITE" />
+      <Label layoutX="130.0" layoutY="92.0" text="D" textFill="WHITE" />
+      <Label layoutX="131.0" layoutY="132.0" text="S" textFill="WHITE" />
+      <Label layoutX="131.0" layoutY="171.0" text="K" textFill="WHITE" />
       <Line fx:id="tuneLineU" endX="100.0" layoutX="186.0" layoutY="61.0" rotate="90.0" startX="80.0" translateZ="-40.0" />
       <Line fx:id="tuneLineD" endX="100.0" layoutX="270.0" layoutY="100.0" rotate="90.0" startX="80.0" />
       <Line fx:id="tuningLine" endX="30.0" layoutX="656.0" layoutY="121.0" rotate="90.0" startX="-100.0" stroke="RED" strokeLineJoin="ROUND" strokeWidth="10.0" />
-      <Line fx:id="tuneLineS" endX="100.0" layoutX="376.0" layoutY="140.0" rotate="90.0" startX="80.0" />
-      <Line fx:id="tuneLineK" endX="100.0" layoutX="302.0" layoutY="180.0" rotate="90.0" startX="80.0" />
-      <Label layoutX="393.0" layoutY="245.0" text="𝄢" />
-      <Label layoutX="524.0" layoutY="245.0" text="𝄞" />
-      <Label layoutX="297.0" layoutY="245.0" text="⚟" />
+      <Line fx:id="tuneLineS" endX="100.0" layoutX="376.0" layoutY="61.0" rotate="90.0" startX="80.0" />
+      <Line fx:id="tuneLineK" endX="100.0" layoutX="126.0" layoutY="100.0" rotate="90.0" startX="80.0" />
+      <Label layoutX="393.0" layoutY="245.0" text="𝄢" textFill="WHITE" />
+      <Label layoutX="524.0" layoutY="245.0" text="𝄞" textFill="WHITE" />
+      <Label layoutX="297.0" layoutY="245.0" text="⚟" textFill="WHITE" />
    </children>
 </AnchorPane>
