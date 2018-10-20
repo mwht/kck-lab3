@@ -101,7 +101,7 @@ public class Controller {
     }
 
     private void changeBand(int band) {
-        Main.setCurrentBand(band);
+        Main.setCurrentBand(band, frequencyKnob);
         //Logger.getAnonymousLogger().info("Band set to " + band);
     }
 

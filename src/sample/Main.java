@@ -10,6 +10,7 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.Slider;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -25,6 +26,8 @@ public class Main extends Application {
     private static double accuracy;
     private static double volume;
     private static double eqPercentage;
+    private final static double[] CORRECT_FREQ_TABLE = {0.25,0.43,0.66,0.50};
+    private final static double MAX_FREQ_ERROR = 0.10;
 
     public static void setMute(boolean muted) {
         if(mediaPlayer != null) {
@@ -51,24 +54,32 @@ public class Main extends Application {
         }
     }
 
-    public static void setCurrentBand(int band) {
+    public static void setCurrentBand(int band, ProgressIndicator frequencyKnob) {
         currentBand = band;
         if(mediaPlayer != null)
             mediaPlayer.stop();
         mediaPlayer = new MediaPlayer(mediaList.get(band));
-        mediaPlayer.setVolume(0); // make sure we don't play track before tuning
-        mediaPlayer.play();
         setEQShape();
+        if(Math.abs(frequencyKnob.getProgress() - CORRECT_FREQ_TABLE[currentBand]) < MAX_FREQ_ERROR) {
+            setAccuracy(1-(Math.abs(frequencyKnob.getProgress() - CORRECT_FREQ_TABLE[currentBand])/MAX_FREQ_ERROR));
+        } else {
+            setAccuracy(0);
+        }
+        Logger.getAnonymousLogger().info(Double.toString(mediaPlayer.getVolume()));
+        mediaPlayer.play();
     }
 
     private static void setAccuracy(double mAccuracy) {
         accuracy = mAccuracy;
         if(!radioMute) mediaPlayer.setVolume(accuracy*volume);
+        else mediaPlayer.setVolume(0);
     }
 
     public static void setVolume(double mVolume) {
         volume = mVolume;
         if(!radioMute) mediaPlayer.setVolume(accuracy*volume);
+        else mediaPlayer.setVolume(0);
+
     }
 
     @Override
@@ -83,23 +94,21 @@ public class Main extends Application {
         primaryStage.setResizable(false);
         primaryStage.setTitle("Unitra ślązak");
         primaryStage.setScene(rootScene);
-        primaryStage.show();
 
-        setCurrentBand(0);
-        setMute(true);
-        setVolume(0.5);
+        Line tuningLine = (Line) rootScene.lookup("#tuningLine");
+        tuningLine.setLayoutX(198+(0.5*(656-198)));
 
         ProgressIndicator frequencyKnob = (ProgressIndicator) rootScene.lookup("#frequencyKnob");
         frequencyKnob.progressProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                final double[] CORRECT_FREQ_TABLE = {0.25,0.43,0.66,0.50};
-                final double MAX_FREQ_ERROR = 0.10;
 
                 Logger.getAnonymousLogger().info((double)newValue+" - "+CORRECT_FREQ_TABLE[currentBand]+"="+Math.abs((double)newValue - CORRECT_FREQ_TABLE[currentBand]));
 
                 if(Math.abs((double)newValue - CORRECT_FREQ_TABLE[currentBand]) < MAX_FREQ_ERROR) {
                     setAccuracy(1-(Math.abs((double)newValue - CORRECT_FREQ_TABLE[currentBand])/MAX_FREQ_ERROR));
+                } else {
+                    setAccuracy(0);
                 }
             }
         });
@@ -120,6 +129,12 @@ public class Main extends Application {
                 setEQShape(regulator);
             }
         });
+
+        setCurrentBand(0, frequencyKnob);
+        setMute(true);
+        setVolume(0.5);
+
+        primaryStage.show();
     }
 
 
