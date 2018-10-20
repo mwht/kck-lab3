@@ -15,7 +15,7 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
       <ToggleButton fx:id="powerButton" layoutX="180.0" layoutY="261.0" mnemonicParsing="false" onAction="#onPowerButtonToggle" text="~ " />
-      <Slider fx:id="volumeCtrl" layoutX="233.0" layoutY="266.0" />
+      <Slider fx:id="volumeCtrl" layoutX="233.0" layoutY="266.0" value="50.0" />
       <Slider fx:id="equalizerCtrl" layoutX="391.0" layoutY="266.0" value="50.0" />
       <RadioButton fx:id="bandSelectorU" alignment="BOTTOM_CENTER" contentDisplay="BOTTOM" layoutX="543.0" layoutY="265.0" mnemonicParsing="false" onAction="#onBandSelectorUAction" selected="true">
          <toggleGroup>

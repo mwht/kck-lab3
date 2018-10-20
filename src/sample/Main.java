@@ -23,10 +23,26 @@ public class Main extends Application {
     private static int currentBand;
     private static double accuracy;
     private static double volume;
+    private static double eqPercentage;
 
     public static void setMute(boolean muted) {
         if(mediaPlayer != null) {
             mediaPlayer.setMute(muted);
+        }
+    }
+
+    public static void setEQShape() {
+        setEQShape(eqPercentage);
+    }
+
+    public static void setEQShape(double percentage) {
+        eqPercentage = percentage;
+        if(percentage >= 50.0) {
+            mediaPlayer.getAudioEqualizer().getBands().get(3).setGain(0);
+            mediaPlayer.getAudioEqualizer().getBands().get(7).setGain((percentage-50.0)/(50.0/12.0));
+        } else {
+            mediaPlayer.getAudioEqualizer().getBands().get(3).setGain((50.0-percentage)/(50.0/12.0));
+            mediaPlayer.getAudioEqualizer().getBands().get(7).setGain(0);
         }
     }
 
@@ -37,6 +53,7 @@ public class Main extends Application {
         mediaPlayer = new MediaPlayer(mediaList.get(band));
         mediaPlayer.setVolume(0);
         mediaPlayer.play();
+        setEQShape();
     }
 
     private static void setAccuracy(double mAccuracy) {
@@ -94,13 +111,7 @@ public class Main extends Application {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 double regulator = (double) newValue;
-                if(regulator >= 50.0) {
-                    mediaPlayer.getAudioEqualizer().getBands().get(3).setGain(0);
-                    mediaPlayer.getAudioEqualizer().getBands().get(7).setGain((regulator-50.0)/(50.0/12.0));
-                } else {
-                    mediaPlayer.getAudioEqualizer().getBands().get(3).setGain((50.0-regulator)/(50.0/12.0));
-                    mediaPlayer.getAudioEqualizer().getBands().get(7).setGain(0);
-                }
+                setEQShape(regulator);
             }
         });
     }
