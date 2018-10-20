@@ -50,5 +50,8 @@
       <Line fx:id="tuningLine" endX="30.0" layoutX="656.0" layoutY="121.0" rotate="90.0" startX="-100.0" stroke="RED" strokeLineJoin="ROUND" strokeWidth="10.0" />
       <Line fx:id="tuneLineS" endX="100.0" layoutX="376.0" layoutY="140.0" rotate="90.0" startX="80.0" />
       <Line fx:id="tuneLineK" endX="100.0" layoutX="302.0" layoutY="180.0" rotate="90.0" startX="80.0" />
+      <Label layoutX="393.0" layoutY="245.0" text="𝄢" />
+      <Label layoutX="524.0" layoutY="245.0" text="𝄞" />
+      <Label layoutX="297.0" layoutY="245.0" text="⚟" />
    </children>
 </AnchorPane>
