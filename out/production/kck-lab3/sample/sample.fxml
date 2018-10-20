@@ -14,6 +14,10 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
+      <Cylinder fx:id="tuningK" height="466.0" layoutX="391.0" layoutY="179.0" radius="10.0" rotate="90.0" />
+      <Cylinder fx:id="tuningS" height="466.0" layoutX="391.0" layoutY="140.0" radius="10.0" rotate="90.0" />
+      <Cylinder fx:id="tuningD" height="466.0" layoutX="391.0" layoutY="100.0" radius="10.0" rotate="90.0" />
+      <Cylinder fx:id="tuningU" height="466.0" layoutX="391.0" layoutY="61.0" radius="10.0" rotate="90.0" />
       <ToggleButton fx:id="powerButton" layoutX="180.0" layoutY="261.0" mnemonicParsing="false" onAction="#onPowerButtonToggle" text="~ " />
       <Slider fx:id="volumeCtrl" layoutX="233.0" layoutY="266.0" value="50.0" />
       <Slider fx:id="equalizerCtrl" layoutX="391.0" layoutY="266.0" value="50.0" />
@@ -37,10 +41,13 @@
             <Glow />
          </effect>
       </ProgressIndicator>
-      <Cylinder fx:id="tuningU" height="466.0" layoutX="391.0" layoutY="61.0" radius="10.0" rotate="90.0" />
-      <Cylinder fx:id="tuningD" height="466.0" layoutX="391.0" layoutY="100.0" radius="10.0" rotate="90.0" />
-      <Cylinder fx:id="tuningS" height="466.0" layoutX="391.0" layoutY="140.0" radius="10.0" rotate="90.0" />
-      <Cylinder fx:id="tuningK" height="466.0" layoutX="391.0" layoutY="179.0" radius="10.0" rotate="90.0" />
+      <Label layoutX="130.0" layoutY="53.0" text="U" />
+      <Label layoutX="130.0" layoutY="92.0" text="D" />
+      <Label layoutX="131.0" layoutY="132.0" text="S" />
+      <Label layoutX="131.0" layoutY="171.0" text="K" />
+      <Line fx:id="tuneLineU" endX="100.0" layoutX="186.0" layoutY="61.0" rotate="90.0" startX="80.0" translateZ="-40.0" />
+      <Line fx:id="tuneLineD" endX="100.0" layoutX="270.0" layoutY="100.0" rotate="90.0" startX="80.0" />
       <Line fx:id="tuningLine" endX="30.0" layoutX="656.0" layoutY="121.0" rotate="90.0" startX="-100.0" stroke="RED" strokeLineJoin="ROUND" strokeWidth="10.0" />
+      <Line fx:id="tuneLineS" endX="100.0" layoutX="376.0" layoutY="140.0" rotate="90.0" startX="80.0" />
    </children>
 </AnchorPane>
